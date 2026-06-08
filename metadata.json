@@ -1,0 +1,6 @@
+{
+  "name": "ROYMEN Fashion",
+  "description": "Premium luxury fashion eCommerce store for Bangladesh - Wear Confidence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
