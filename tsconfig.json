@@ -10,11 +10,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "declaration": false,
     "sourceMap": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["server/**/*.ts"],
+  "include": ["server"],
   "exclude": ["node_modules", "dist"]
 }
