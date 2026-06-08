@@ -4,7 +4,7 @@
     "module": "commonjs",
     "lib": ["ES2020"],
     "outDir": "./dist",
-    "rootDir": "./server",
+    "rootDir": ".",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -14,10 +14,9 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "declaration": false,
-    "removeComments": true,
-    "noImplicitAny": false
+    "removeComments": true
   },
-  "include": ["server/**/*.ts"],
+  "include": ["server/**/*.ts", "start.ts"],
   "exclude": ["node_modules", "dist"],
   "ts-node": {
     "esm": false

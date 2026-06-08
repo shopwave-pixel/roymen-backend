@@ -12,6 +12,7 @@ RUN npm install
 
 # Copy source code
 COPY server ./server
+COPY start.ts ./
 
 # Build TypeScript
 RUN npm run build
@@ -26,9 +27,6 @@ COPY package*.json ./
 
 # Install only production dependencies
 RUN npm install --only=production
-
-# Copy wrapper script
-COPY start.js ./
 
 # Copy built application from builder
 COPY --from=builder /app/dist ./dist
@@ -45,4 +43,5 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD node -e "require('http').get('http://localhost:5000/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["node", "dist/start.js"]
+
