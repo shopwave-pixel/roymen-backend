@@ -1,0 +1,17 @@
+node_modules
+npm-debug.log
+dist
+.git
+.gitignore
+README.md
+LICENSE
+.env
+.env.example
+.vscode
+.idea
+*.md
+.DS_Store
+render.yaml
+netlify.toml
+tsconfig.json
+server/

@@ -1,10 +1,7 @@
 services:
   - type: web
     name: roymen-backend
-    env: node
-    plan: free
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: NODE_ENV
         value: production
