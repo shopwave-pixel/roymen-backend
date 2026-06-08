@@ -1,11 +1,2 @@
-# Netlify configuration file for ROYMEN Fashion eCommerce
-# This file ensures that client-side React Router redirects all server paths back to index.html
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-[build]
-  publish = "dist"
-  command = "npm run build"
+# This configuration is for frontend deployment only (if used)
+# For backend deployment on Render, see render.yaml instead

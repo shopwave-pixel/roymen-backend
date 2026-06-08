@@ -98,18 +98,40 @@ const defaultDBContent: LocalDBStructure = {
 };
 
 // Seed initial products if file empty
-import { products as seedProducts } from '../src/data/products.ts';
-
 function loadLocalDB(): LocalDBStructure {
   if (!fs.existsSync(dbFilePath)) {
-    // Inject seed products
+    // Inject default seed products (no external dependency)
     const initial = { ...defaultDBContent };
-    initial.products = seedProducts.map(p => ({
-      ...p,
-      id: p.id || `roy-${Math.floor(Math.random() * 100000)}`,
-      createdAt: new Date().toISOString()
-    }));
+    initial.products = [
+      {
+        id: "roy-001",
+        name: "Premium Silk Shirt",
+        category: "Shirts",
+        price: 2500,
+        description: "Luxurious silk blend formal shirt",
+        image: "https://via.placeholder.com/500",
+        rating: 4.8,
+        reviewCount: 12,
+        reviews: [],
+        inStock: true,
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: "roy-002",
+        name: "Classic Dress Pants",
+        category: "Trousers",
+        price: 1800,
+        description: "Tailored dress pants with perfect fit",
+        image: "https://via.placeholder.com/500",
+        rating: 4.6,
+        reviewCount: 8,
+        reviews: [],
+        inStock: true,
+        createdAt: new Date().toISOString()
+      }
+    ];
     fs.writeFileSync(dbFilePath, JSON.stringify(initial, null, 2), 'utf-8');
+    console.log('✅ Initialized database with seed data');
     return initial;
   }
 
@@ -120,10 +142,21 @@ function loadLocalDB(): LocalDBStructure {
     // Ensure all collections exist
     if (!parsed.users) parsed.users = defaultDBContent.users;
     if (!parsed.products || parsed.products.length === 0) {
-      parsed.products = seedProducts.map(p => ({
-        ...p,
-        id: p.id || `roy-${Math.floor(Math.random() * 100000)}`
-      }));
+      parsed.products = [
+        {
+          id: "roy-001",
+          name: "Premium Silk Shirt",
+          category: "Shirts",
+          price: 2500,
+          description: "Luxurious silk blend formal shirt",
+          image: "https://via.placeholder.com/500",
+          rating: 4.8,
+          reviewCount: 12,
+          reviews: [],
+          inStock: true,
+          createdAt: new Date().toISOString()
+        }
+      ];
     }
     if (!parsed.orders) parsed.orders = [];
     if (!parsed.coupons) parsed.coupons = defaultDBContent.coupons;
@@ -373,3 +406,6 @@ export const dataService = {
     return db.coupons.length < lenBefore;
   }
 };
+
+// Export functions
+export { connectDB, dataService, isMongooseConnected };

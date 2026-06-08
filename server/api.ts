@@ -1,6 +1,6 @@
 import { Router, Response } from 'express';
 import bcryptjs from 'bcryptjs';
-import { dataService } from './db.js'; // Use ESM with double resolution, or standard import
+import { dataService } from './db.js';
 import {
   authenticateToken,
   requireAdmin,

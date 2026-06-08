@@ -1,52 +1,187 @@
-# ROYMEN Bangladesh - Premium Fashion eCommerce Store
+# ROYMEN Backend - Express.js + TypeScript
 
-Wear Confidence. 
-
-An ultra-luxurious, production-ready, client-side fashion eCommerce website engineered for Bangladesh. Built using **React + Vite + TypeScript + Tailwind CSS v4 + React Router + Context API**, completely customized for Bangladeshi consumers with BDT pricing, localized payment structures (bKash, Cash on Delivery, cards), and translation support.
-
-## 🌟 Major Highlights & Luxury Attributes
-- **Monochrome Quiet Luxury Theme**: Minimalist black & white editorial style.
-- **Durable Client State Context**: Cart and wishlist elements stored in `localStorage` for session retention.
-- **Product Search & Filtering Grid**: Instant query search, size pills, category tags, price slider, and various sorters.
-- **Multi-lingual support**: Instantly toggle text templates between **English (EN)** and **Bangla (বাং)**.
-- **Bespoke Checkout System**: Fully operational delivery address form, county selector, bKash interactive sandbox form, and confirmation receipt.
-- **Product details & hand-crafted reviews**: Multi-image thumbnail selection, detail specifications, care guides, and instant client feedback reviews.
-- **Netlify Ready deployment**: Dedicated single-page routing, redirects, and custom configuration setup.
+Premium luxury fashion eCommerce backend API for Bangladesh.
 
 ---
 
-## 🛠️ Project Folder Layout
+## 🛠️ Project Structure
+
 ```text
 /
-├── netlify.toml                # Netlify SPA redirect rules
-├── package.json                # Dependencies configuration
-├── vite.config.ts              # Vite bundle configuration
-├── src/
-│   ├── main.tsx                # Client entry-point
-│   ├── App.tsx                 # Base layout, routing nodes, & custom toasts
-│   ├── types.ts                # App typescript models
-│   ├── index.css               # Global styling, keyframes, transitions
-│   ├── data/
-│   │   └── products.ts         # High-resolution Unsplash fashion inventory
-│   ├── context/
-│   │   └── ShopContext.tsx     # Context state (cart, wishlist, language, theme)
-│   ├── components/
-│   │   ├── Navbar.tsx          # Utility drawer links & header alerts
-│   │   ├── Footer.tsx          # Bangladesh showroom addresses & socials
-│   │   ├── ProductCard.tsx     # Animated display layout, sizes, quick buy
-│   │   └── CartDrawer.tsx      # Slide-over bag drawer & calculations
+├── package.json                    # Dependencies
+├── tsconfig.json                   # TypeScript configuration
+├── render.yaml                     # Render deployment config
+├── netlify.toml                    # Legacy (frontend only)
+├── server/
+│   ├── server.ts                   # Main Express app entry
+│   ├── api.ts                      # API routes
+│   ├── db.ts                       # Database service (MongoDB/JSON fallback)
+│   ├── authMiddleware.ts           # JWT authentication
+│   ├── cloudinary.ts               # Image upload service
+│   └── emailService.ts             # Order confirmation emails
+└── data/
+    └── db.json                     # Local persistent storage (auto-created)
 ```
 
 ---
 
-## 🚀 Local Launch Routine
+## 🚀 Getting Started
 
-Follow these simple steps to run the application on your local machine:
+### Prerequisites
+- Node.js 18+ and npm
+
+### Installation
 
 1. **Install Dependencies**:
    ```bash
    npm install
    ```
+
+2. **Environment Setup**:
+   ```bash
+   cp .env.example .env
+   ```
+   Edit `.env` and add your configuration (see below)
+
+3. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
+   Server runs on `http://localhost:5000`
+
+### Production Build & Deploy
+
+1. **Build TypeScript**:
+   ```bash
+   npm run build
+   ```
+
+2. **Start Server**:
+   ```bash
+   npm start
+   ```
+
+---
+
+## 📋 API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/auth/me` - Get current user profile
+- `PUT /api/auth/address` - Add/update delivery address
+
+### Products
+- `GET /api/products` - List all products
+- `GET /api/products/:id` - Get product details
+- `POST /api/products` - Create product (admin)
+- `PUT /api/products/:id` - Update product (admin)
+- `DELETE /api/products/:id` - Delete product (admin)
+- `POST /api/products/:id/review` - Add product review
+
+### Orders
+- `POST /api/orders` - Create order
+- `GET /api/orders` - Get user orders or all orders (admin)
+- `GET /api/orders/:id` - Get order details
+- `POST /api/orders/:id/payment` - Submit payment info
+- `POST /api/orders/:id/verify-payment` - Verify payment (admin)
+- `PUT /api/orders/:id/status` - Update order status (admin)
+
+### Promotions
+- `GET /api/coupons` - Get active coupons
+- `POST /api/coupons` - Create coupon (admin)
+- `DELETE /api/coupons/:code` - Delete coupon (admin)
+
+### Admin
+- `GET /api/admin/analytics` - Get sales analytics
+- `GET /api/admin/emails` - Get email logs
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Server
+NODE_ENV=development
+PORT=5000
+
+# JWT
+JWT_SECRET=your_secure_jwt_secret_key_here
+
+# Database (Optional - uses local JSON if not provided)
+MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/roymen_db
+
+# Cloudinary (Image uploads)
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+# Email Service
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_app_password
+SMTP_FROM_NAME=ROYMEN
+SMTP_FROM_EMAIL=noreply@roymen.com
+
+# Frontend URL (for email links)
+APP_URL=https://roymen.com
+```
+
+---
+
+## 🗄️ Database
+
+### MongoDB (Recommended for Production)
+- Set `MONGODB_URI` in `.env`
+- Automatic connection on startup
+
+### Local JSON Fallback (Development)
+- If `MONGODB_URI` not set, uses `data/db.json`
+- Fully functional alternative with persistent storage
+- Perfect for development without MongoDB setup
+
+---
+
+## 🚀 Deployment on Render
+
+1. Push code to GitHub
+2. Create new Web Service on [render.com](https://render.com)
+3. Connect GitHub repository
+4. Set Build Command: `npm install && npm run build`
+5. Set Start Command: `npm start`
+6. Add Environment Variables (from `.env`)
+7. Deploy!
+
+---
+
+## 📧 Admin Credentials (Development)
+- Email: `admin@roymen.com`
+- Password: `password123`
+
+---
+
+## 🛡️ Features
+
+✅ JWT Authentication  
+✅ Product Management  
+✅ Order Processing  
+✅ Payment Verification (bKash, Nagad, Cash on Delivery)  
+✅ Email Notifications  
+✅ Image Upload to Cloudinary  
+✅ Admin Analytics  
+✅ Coupon/Promo Codes  
+✅ Product Reviews & Ratings  
+✅ MongoDB + JSON Fallback  
+
+---
+
+## 📝 License
+
+Proprietary - ROYMEN Bangladesh Ltd.
+
 
 2. **Boot Development Environment**:
    ```bash
