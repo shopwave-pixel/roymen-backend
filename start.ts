@@ -1,12 +1,10 @@
 #!/usr/bin/env node
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import * as path from 'path';
+import * as fs from 'fs';
 
 // Get the correct paths
+const __dirname = __dirname || path.dirname(require.main!.filename);
 const projectRoot = __dirname;
 const distDir = path.join(projectRoot, 'dist');
 const serverFile = path.join(distDir, 'server.js');
@@ -30,10 +28,7 @@ if (fs.existsSync(distDir)) {
 // Try to load and run the server
 if (fs.existsSync(serverFile)) {
   console.log(`\nLoading server from: ${serverFile}`);
-  import(serverFile).catch((err: Error) => {
-    console.error(`\n❌ ERROR loading server: ${err.message}`);
-    process.exit(1);
-  });
+  require(serverFile);
 } else {
   console.error(`\n❌ ERROR: Server file not found at ${serverFile}`);
   console.error('Build may have failed. Check build output above.');

@@ -14,7 +14,8 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "declaration": false,
-    "removeComments": true
+    "removeComments": true,
+    "types": ["node"]
   },
   "include": ["server/**/*.ts", "start.ts"],
   "exclude": ["node_modules", "dist"],
