@@ -17,7 +17,7 @@
     "removeComments": true,
     "types": ["node"]
   },
-  "include": ["server/**/*.ts", "start.ts"],
+  "include": ["server/**/*.ts", "start.ts", "netlify/functions/**/*.ts"],
   "exclude": ["node_modules", "dist"],
   "ts-node": {
     "esm": false

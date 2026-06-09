@@ -31,9 +31,4 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   res.status(500).json({ message: 'Internal server error' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`ROYMEN Backend Server running on port ${PORT}`);
-});
-
 export default app;

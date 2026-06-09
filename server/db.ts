@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import { fileURLToPath } from 'url';
 
 // Resolve __dirname since we may run under ESM or dynamic envs
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const dbDirectory = path.join(process.cwd(), 'data');
+const defaultDataDir = process.env.DATA_DIR || (process.env.NETLIFY ? path.join(os.tmpdir(), 'roymen-data') : path.join(process.cwd(), 'data'));
+const dbDirectory = defaultDataDir;
 const dbFilePath = path.join(dbDirectory, 'db.json');
 
 // Ensure database directory and file exist
