@@ -1,2 +1,16 @@
-# This configuration is for frontend deployment only (if used)
-# For backend deployment on Render, see render.yaml instead
+[build]
+  command = "npm run build"
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/roymen/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/health"
+  to = "/.netlify/functions/roymen/health"
+  status = 200
+  force = true
